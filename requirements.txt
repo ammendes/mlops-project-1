@@ -1,0 +1,8 @@
+
+mlflow
+scikit-learn
+pandas
+requests
+matplotlib
+seaborn
+sqlalchemy

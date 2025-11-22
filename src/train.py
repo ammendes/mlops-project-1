@@ -1,0 +1,112 @@
+import mlflow
+import mlflow.sklearn
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, classification_report, confusion_matrix, roc_curve, roc_auc_score
+from data_loader import load_data
+import json
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
+import shutil
+
+def main():
+    
+    # Create a temporary directory for artifacts
+    tmp_dir = os.path.join(os.path.dirname(__file__), "../tmp")
+    os.makedirs(tmp_dir, exist_ok=True)
+
+    # Hyperparameters
+    params = {
+        "n_estimators": 100,
+        "max_depth": 5,
+        "random_state": 42,
+    }
+
+    # Load data
+    print(f"Loading data...")
+    X_train, X_test, y_train, y_test = load_data()
+    print(f"Data loaded. Training samples: {X_train.shape[0]}, Test samples: {X_test.shape[0]}")
+
+    # Set the tracking URI to a SQLite format database
+    mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    
+    # Set MLflow experiment (if not found, MLflow createsa new one)
+    mlflow.set_experiment("default")
+
+    # Start MLflow run
+    with mlflow.start_run():
+        
+        # Define parameter logging
+        mlflow.log_params(params)
+
+        # Train model
+        print(f"Training model...")
+        clf = RandomForestClassifier(**params)
+        clf.fit(X_train, y_train)
+
+        # Predict on test data to evaluate
+        print(f"Evaluating model...")
+        preds = clf.predict(X_test)
+        accuracy = accuracy_score(y_test, preds)
+        precision = precision_score(y_test, preds)
+        recall = recall_score(y_test, preds)
+        f1 = f1_score(y_test, preds)
+
+        # Log metrics
+        print("Logging metrics...")
+        mlflow.log_metric("accuracy", accuracy)
+        mlflow.log_metric("precision", precision)
+        mlflow.log_metric("recall", recall)
+        mlflow.log_metric("f1", f1)
+
+        # Confusion Matrix
+        cm = confusion_matrix(y_test, preds)
+        plt.figure(figsize=(6, 4))
+        sns.heatmap(cm, annot=True, fmt="d", cmap="Blues")
+        plt.xlabel("Predicted")
+        plt.ylabel("Actual")
+        plt.title("Confusion Matrix")
+        plt.tight_layout()
+        cm_path = os.path.join(tmp_dir, "confusion_matrix.png")
+        plt.savefig(cm_path)
+        plt.close()
+        mlflow.log_artifact(cm_path, artifact_path="plots")
+
+        # ROC Curve
+        y_proba = clf.predict_proba(X_test)[:, 1]
+        fpr, tpr, thresholds = roc_curve(y_test, y_proba)
+        auc = roc_auc_score(y_test, y_proba)
+        plt.figure(figsize=(6, 4))
+        plt.plot(fpr, tpr, label=f"AUC = {auc:.2f}")
+        plt.plot([0, 1], [0, 1], linestyle="--", color="gray")
+        plt.xlabel("False Positive Rate")
+        plt.ylabel("True Positive Rate")
+        plt.title("ROC Curve")
+        plt.legend()
+        plt.tight_layout()
+        roc_path = os.path.join(tmp_dir, "roc_curve.png")
+        plt.savefig(roc_path)
+        plt.close()
+        mlflow.log_artifact(roc_path, artifact_path="plots")
+
+        # Save report as JSON before logging
+        print("Generating classification report...")
+        report = classification_report(y_test, preds, output_dict=True)
+        report_path = os.path.join(tmp_dir, "classification_report.json")
+        with open(report_path, "w") as f:
+            json.dump(report, f)
+        mlflow.log_artifact(report_path, artifact_path="reports")
+
+        # Log model
+        print("Logging model...")
+        mlflow.sklearn.log_model(clf, name="model")
+
+        # Clean up temporary directory
+        shutil.rmtree(tmp_dir)
+        
+        print("Finished!")
+
+if __name__ == "__main__":
+    main()
+
+        

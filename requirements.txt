@@ -6,3 +6,7 @@ requests
 matplotlib
 seaborn
 sqlalchemy
+fastapi
+uvicorn
+pydantic
+numpy

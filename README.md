@@ -54,19 +54,64 @@ mlops-project-1/
 	pip install -r requirements.txt
 	```
 
+
 ## Usage
 
-1. **Run model training and logging:**
-	```sh
-	python src/train.py
-	```
-	- This will download the Titanic dataset (if not present), preprocess data, train a RandomForest model, evaluate metrics, log results and artifacts to MLflow, and clean up temporary files.
+### 1. Model Training and Logging
+```sh
+python src/train.py
+```
+- Downloads the Titanic dataset (if not present), preprocesses data, trains a RandomForest model, evaluates metrics, logs results and artifacts to MLflow, and cleans up temporary files.
 
-2. **Start MLflow UI to view experiments and artifacts:**
+### 2. MLflow UI for Experiment Tracking
+```sh
+mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5001
+```
+- Access the UI at [http://localhost:5001](http://localhost:5001)
+
+### 3. FastAPI Inference Service
+
+#### Start the API server:
+```sh
+uvicorn src.inference_api:app --reload
+```
+- The API will be available at [http://localhost:8000](http://localhost:8000)
+- Interactive docs: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+#### /predict Endpoint
+- Accepts a JSON payload with the following fields:
+	- `Pclass` (int)
+	- `Age` (float)
+	- `SibSp` (int)
+	- `Parch` (int)
+	- `Fare` (float)
+	- `Sex_male` (int)
+	- `Embarked_Q` (int)
+	- `Embarked_S` (int)
+- Example request:
+```json
+{
+	"Pclass": 3,
+	"Age": 22.0,
+	"SibSp": 1,
+	"Parch": 0,
+	"Fare": 7.25,
+	"Sex_male": 1,
+	"Embarked_Q": 0,
+	"Embarked_S": 1
+}
+```
+
+#### Testing the API
+- Use the Swagger UI at `/docs` to test requests interactively.
+- Or use `curl`:
 	```sh
-	mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5001
+	curl -X POST "http://localhost:8000/predict" -H "Content-Type: application/json" -d '{"Pclass":3,"Age":22.0,"SibSp":1,"Parch":0,"Fare":7.25,"Sex_male":1,"Embarked_Q":0,"Embarked_S":1}'
 	```
-	- Access the UI at [http://localhost:5001](http://localhost:5001)
+
+#### Model Loading
+- The API loads the latest model from the MLflow Model Registry (ensure the model is registered and in the correct stage, e.g., `Production`).
+- Input validation is handled by Pydantic for robust and secure inference.
 
 ## MLflow Tracking & Artifacts
 

@@ -59,12 +59,12 @@ mlops-project-1/
 ## Dockerized Workflow (Recommended)
 All steps below are performed from the project root. This workflow ensures reproducibility and clean separation of environments.
 
-### 1. Build the Docker image:
+1. **Build the Docker image:**
 ```sh
 docker build -f docker/Dockerfile -t titanic-inference .
 ```
 
-### 2. Train the model inside Docker:
+2. **Train the model inside Docker:**
 ```sh
 docker run -it --rm \
   -v $PWD/mlruns:/app/mlruns \
@@ -75,7 +75,7 @@ docker run -it --rm \
 
 This will create all necessary experiemtn and model artifact in mounted volumes.
 
-### 3. Start the MLflow UI inside Docker:
+3. **Start the MLflow UI inside Docker:**
 ```sh
 docker run -p 5001:5001 \
   -v $PWD/mlruns:/app/mlruns \
@@ -86,7 +86,7 @@ docker run -p 5001:5001 \
 - Access at http://localhost:5001
 - Regiter the trained model in the Model Registry from a run created inside the container
 
-### 4. Run the FastAPI inference service inside Docker:
+4. **Run the FastAPI inference service inside Docker:**
 ```sh
 docker run -p 8000:8000 \
   -v $PWD/mlruns:/app/mlruns \
@@ -99,19 +99,19 @@ docker run -p 8000:8000 \
 
 ## Usage
 
-### 1. Model Training and Logging
+1. **Model Training and Logging**
 ```sh
 python src/train.py
 ```
 - Downloads the Titanic dataset (if not present), preprocesses data, trains a RandomForest model, evaluates metrics, logs results and artifacts to MLflow, and cleans up temporary files.
 
-### 2. MLflow UI for Experiment Tracking
+2. **MLflow UI for Experiment Tracking**
 ```sh
 mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5001
 ```
 - Access the UI at [http://localhost:5001](http://localhost:5001)
 
-### 3. FastAPI Inference Service
+3. **FastAPI Inference Service**
 
 #### Start the API server:
 ```sh

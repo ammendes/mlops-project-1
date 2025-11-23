@@ -97,6 +97,33 @@ This will create all necessary experiemtn and model artifact in mounted volumes.
 - The API will be available at http://localhost:8000
 - Interactive docs: http://localhost:8000/docs
 
+## Makefile Shortcuts
+For convenience, you can use the provided Makefile to run common project tasks with simple commands:
+
+- **Build the Docker image:**
+    ```sh
+    make build
+    ```
+
+- **Train the model in Docker:**
+    ```sh
+    make train
+    ````
+
+- **Start the MLflow UI in Docker:**
+    ```sh
+    make mlflow-ui
+    ````
+
+- **Run the FastAPI inference service in Docker:**
+    ```sh
+    make run-api
+    ````
+
+These commands automate the reccomendd workflow and ensure reproducibility.
+
+Make sure you are in the project root directory before running any `make`command.
+
 ## Usage
 
 1. **Model Training and Logging**

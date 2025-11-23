@@ -208,3 +208,8 @@ Make sure you are in the project root directory before running any `make`command
 
 - Temporary files are saved in `tmp/` during each run and automatically deleted after logging to MLflow.
 - The `mlruns/` folder is managed by MLflow and should be added to `.gitignore`.
+
+---
+## License
+
+This project is licensed under the [MIT License](LICENSE).

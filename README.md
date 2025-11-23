@@ -12,7 +12,7 @@ By using this project, you benefit from a clean architecture, automated workflow
 
 <p align="center">
   <img src="docs/architecture_diagram.png" alt="Project Architecture" />
-</p></p>
+</p>
 
 ## Project Structure
 

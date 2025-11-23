@@ -20,6 +20,8 @@ mlops-project-1/
 ├── src/
 │   ├── data_loader.py       # Data loading and preprocessing
 │   └── train.py             # Model training, evaluation, and MLflow logging
+│   └── inference_api.py     # FastAPI inference service
+
 ```
 
 ## Features & Best Practices

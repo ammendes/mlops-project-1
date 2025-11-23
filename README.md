@@ -60,39 +60,39 @@ mlops-project-1/
 All steps below are performed from the project root. This workflow ensures reproducibility and clean separation of environments.
 
 1. **Build the Docker image:**
-```sh
-docker build -f docker/Dockerfile -t titanic-inference .
-```
+    ```sh
+    docker build -f docker/Dockerfile -t titanic-inference .
+    ```
 
 2. **Train the model inside Docker:**
-```sh
-docker run -it --rm \
-  -v $PWD/mlruns:/app/mlruns \
-  -v $PWD/mlflow.db:/app/mlflow.db \
-  -v $PWD/data:/app/data \
-  titanic-inference python src/train.py
-```
+    ```sh
+    docker run -it --rm \
+    -v $PWD/mlruns:/app/mlruns \
+    -v $PWD/mlflow.db:/app/mlflow.db \
+    -v $PWD/data:/app/data \
+    titanic-inference python src/train.py
+    ```
 
 This will create all necessary experiemtn and model artifact in mounted volumes.
 
 3. **Start the MLflow UI inside Docker:**
-```sh
-docker run -p 5001:5001 \
-  -v $PWD/mlruns:/app/mlruns \
-  -v $PWD/mlflow.db:/app/mlflow.db \
-  titanic-inference mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5001 --host 0.0.0.0
-```
+    ```sh
+    docker run -p 5001:5001 \
+    -v $PWD/mlruns:/app/mlruns \
+    -v $PWD/mlflow.db:/app/mlflow.db \
+    titanic-inference mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5001 --host 0.0.0.0
+    ```
 
 - Access at http://localhost:5001
 - Regiter the trained model in the Model Registry from a run created inside the container
 
 4. **Run the FastAPI inference service inside Docker:**
-```sh
-docker run -p 8000:8000 \
-  -v $PWD/mlruns:/app/mlruns \
-  -v $PWD/mlflow.db:/app/mlflow.db \
-  titanic-inference
-```
+    ```sh
+    docker run -p 8000:8000 \
+    -v $PWD/mlruns:/app/mlruns \
+    -v $PWD/mlflow.db:/app/mlflow.db \
+    titanic-inference
+    ```
 
 - The API will be available at http://localhost:8000
 - Interactive docs: http://localhost:8000/docs
@@ -100,23 +100,23 @@ docker run -p 8000:8000 \
 ## Usage
 
 1. **Model Training and Logging**
-```sh
-python src/train.py
-```
+    ```sh
+    python src/train.py
+    ```
 - Downloads the Titanic dataset (if not present), preprocesses data, trains a RandomForest model, evaluates metrics, logs results and artifacts to MLflow, and cleans up temporary files.
 
 2. **MLflow UI for Experiment Tracking**
-```sh
-mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5001
-```
+    ```sh
+    mlflow ui --backend-store-uri sqlite:///mlflow.db --port 5001
+    ```
 - Access the UI at [http://localhost:5001](http://localhost:5001)
 
 3. **FastAPI Inference Service**
 
 #### Start the API server:
-```sh
-uvicorn src.inference_api:app --reload
-```
+    ```sh
+    uvicorn src.inference_api:app --reload
+    ```
 - The API will be available at [http://localhost:8000](http://localhost:8000)
 - Interactive docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 
@@ -131,18 +131,18 @@ uvicorn src.inference_api:app --reload
 	- `Embarked_Q` (int)
 	- `Embarked_S` (int)
 - Example request:
-```json
-{
-	"Pclass": 3,
-	"Age": 22.0,
-	"SibSp": 1,
-	"Parch": 0,
-	"Fare": 7.25,
-	"Sex_male": 1,
-	"Embarked_Q": 0,
-	"Embarked_S": 1
-}
-```
+    ```json
+    {
+        "Pclass": 3,
+        "Age": 22.0,
+        "SibSp": 1,
+        "Parch": 0,
+        "Fare": 7.25,
+        "Sex_male": 1,
+        "Embarked_Q": 0,
+        "Embarked_S": 1
+    }
+    ```
 
 #### Testing the API
 - Use the Swagger UI at `/docs` to test requests interactively.

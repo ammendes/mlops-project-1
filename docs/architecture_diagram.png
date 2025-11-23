@@ -1,0 +1,13 @@
+[Diagram placeholder: Will be replaced with a generated architecture diagram.]
+
+Diagram will show:
+- Data ingestion (Titanic CSV)
+- Preprocessing (data_loader.py)
+- Model training & evaluation (train.py)
+- MLflow tracking (mlflow.db, mlruns/)
+- Model registry
+- FastAPI inference service (inference_api.py)
+- Dockerized workflow
+- User/API interaction
+
+(Next step: Generate actual diagram and replace this placeholder.)

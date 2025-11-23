@@ -1,5 +1,5 @@
 
-# Production-Ready MLOps Template: Titanic Survival Prediction
+# Production-Ready MLOps blueprint: Titanic Survival Prediction
 
 Welcome to a robust, production-ready MLOps template for binary classification, built around the Titanic dataset. This project is designed for data scientists, ML engineers, and teams seeking a practical, end-to-end workflow for collaborative, reproducible machine learning. It demonstrates best practices in data ingestion, preprocessing, model training, evaluation, experiment tracking, and deployment using MLflow, Docker, and FastAPI.
 
@@ -13,7 +13,7 @@ By using this project, you benefit from a clean architecture, automated workflow
 ## Project Structure
 
 ```
-mlops-project-1/
+mlops-blueprint-binary-classification/
 ├── config.yaml
 ├── requirements.txt
 ├── README.md
@@ -51,7 +51,7 @@ mlops-project-1/
 1. **Clone the repository:**
 	```sh
 	git clone <your-repo-url>
-	cd mlops-project-1
+    cd mlops-blueprint-binary-classification
 	```
 
 2. **Python version:**
@@ -96,7 +96,7 @@ This will create all necessary experiemtn and model artifact in mounted volumes.
     ```
 
 - Access at http://localhost:5001
-- Regiter the trained model in the Model Registry from a run created inside the container
+- Register the trained model in the Model Registry from a run created inside the container.
 
 4. **Run the FastAPI inference service inside Docker:**
     ```sh
@@ -132,7 +132,7 @@ For convenience, you can use the provided Makefile to run common project tasks w
     make run-api
     ````
 
-These commands automate the reccomendd workflow and ensure reproducibility.
+These commands automate the recommended workflow and ensure reproducibility.
 
 Make sure you are in the project root directory before running any `make`command.
 

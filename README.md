@@ -10,6 +10,10 @@ Welcome to a robust, production-ready MLOps template for binary classification, 
 
 By using this project, you benefit from a clean architecture, automated workflows, and deployment-ready code that can be adapted to your own use cases or serve as a foundation for more complex solutions.
 
+<p align="center">
+![Project Architecture](docs/architecture_diagram.png)
+</p>
+
 ## Project Structure
 
 ```

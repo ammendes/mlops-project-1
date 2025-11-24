@@ -1,6 +1,8 @@
-name: Manual Python Test
+name: Run tests with coverage
 
 on:
+  push:
+  pull_request:
   workflow_dispatch:  # Allows manual trigger
 
 jobs:

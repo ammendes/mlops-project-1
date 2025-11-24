@@ -53,7 +53,6 @@ def test_metrics_are_logged(mlflow_run_dir):
 
 
 def run_training_with_csv(csv_path):
-    import yaml
     # Patch config.yaml to use the synthetic CSV
     with open("config.yaml", "r") as f:
         config = yaml.safe_load(f)

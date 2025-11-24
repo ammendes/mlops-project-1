@@ -1,7 +1,7 @@
 
 # Production-Ready MLOps blueprint: Titanic Survival Prediction
 
-[![GitHub language](https://img.shields.io/github/languages/top/ammendes/mlops-blueprint-binary-classification)](https://github.com/ammendes/mlops-blueprint-binary-classification)
+![Python 3](https://img.shields.io/badge/python-3-brightgreen.svg)
 [![GitHub license](https://img.shields.io/github/license/ammendes/mlops-blueprint-binary-classification)](https://github.com/ammendes/mlops-blueprint-binary-classification/blob/main/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ammendes/mlops-blueprint-binary-classification)](https://github.com/ammendes/mlops-blueprint-binary-classification/stargazers)
 [![Contributors](https://img.shields.io/github/contributors/ammendes/mlops-blueprint-binary-classification)](https://github.com/ammendes/mlops-blueprint-binary-classification/graphs/contributors)

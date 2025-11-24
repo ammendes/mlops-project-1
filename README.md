@@ -1,5 +1,6 @@
+# Production-Ready MLOps Blueprint: Complete Binary Classification Pipeline with Random Forest
 
-# Production-Ready MLOps blueprint: Titanic Survival Prediction
+Robust, reproducible, and deployable workflow for tabular data using MLflow, Docker, and FastAPI
 
 ![Python 3](https://img.shields.io/badge/python-3-brightgreen.svg)
 [![GitHub license](https://img.shields.io/github/license/ammendes/mlops-blueprint-binary-classification)](https://github.com/ammendes/mlops-blueprint-binary-classification/blob/main/LICENSE)

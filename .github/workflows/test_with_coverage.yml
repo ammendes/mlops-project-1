@@ -23,12 +23,8 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov
 
-      - name: Print MLflow env vars
-        run: |
-          echo "MLFLOW_ARTIFACT_LOCATION=$MLFLOW_ARTIFACT_LOCATION"
-          echo "MLFLOW_TRACKING_URI=$MLFLOW_TRACKING_URI"
-          echo "HOME=$HOME"
-          env
+      - name: Set MLflow artifact location
+        run: echo "MLFLOW_ARTIFACT_LOCATION=./mlruns" >> $GITHUB_ENV
 
       - name: Run tests with coverage
         run: |

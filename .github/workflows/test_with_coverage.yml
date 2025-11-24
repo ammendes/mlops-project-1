@@ -28,4 +28,4 @@ jobs:
           PYTHONPATH=. pytest --cov=src --cov-report=xml
 
       - name: Upload coverage reports to Codecov
-          uses: codeco/codecov-action@v5
+        uses: codeco/codecov-action@v5
